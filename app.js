@@ -2,9 +2,16 @@ const btnBotones = document.querySelector('.btnBotones');
 const botones = document.querySelector('.botones');
 const bgcolor = document.querySelector('#bgcolor');
 
+if (localStorage.getItem('bgcolorClassName')===null) {
+    bgcolor.className = 'bg-dark';
+} else {
+    bgcolor.className=localStorage.getItem('bgcolorClassName');    
+}
+
+
 (()=>{
-btnBotones.addEventListener('click', agregarBotones);
-botones.addEventListener('click', delegation);
+    btnBotones.addEventListener('click', agregarBotones);
+    botones.addEventListener('click', delegation);
 })();
 
 function agregarBotones(e) {
@@ -36,5 +43,25 @@ function delegation(e) {
             bgcolor.className='bg-danger';
             break;            
     }
-    
+
+    localStorage.setItem('bgcolorClassName', bgcolor.className);    
 }
+
+//LAS SIGUIENTES LINEAS NO SON PARTE DEL PROGRAMA, 
+//SOLO SON PARA MOSTRAR COMO GRABAR UN OBJETO EN EL LOCALSTORAGE,
+//YA QUE EL LOCALSTORAGE SÓLO ADMITE STRINGS
+
+const persona = {
+    nombre: "Jorge",
+    edad: 60,
+    sexo: "indefinido",
+    correo: "jorge@comehombres.com",
+    coordenadas: {
+        lat: 0800,
+        lng: -0800,
+    }
+};
+
+localStorage.setItem('datosPersona', JSON.stringify(persona));
+let obteniendPersona = JSON.parse(localStorage.getItem('datosPersona'));
+console.log(obteniendPersona);
